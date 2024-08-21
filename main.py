@@ -80,10 +80,9 @@ def createXML(formatted_date, formatted_nextyear_date, cmd):
         arguments = root.find('.//ns:Arguments', namespaces)
         arguments.text = cmd
     
-    if cmd == 'none':
-        tree.write('reserveRecord.xml', encoding='UTF-8')  
-    else :
-        tree.write('reserve.xml', encoding='UTF-8')
+    # 絶対パスで保存
+    output_path = os.path.join(script_dir, 'reserveRecord.xml' if cmd == 'none' else 'reserve.xml')
+    tree.write(output_path, encoding='UTF-8')
         
 
 

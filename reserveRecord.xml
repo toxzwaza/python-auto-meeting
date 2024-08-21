@@ -6,8 +6,8 @@
   </ns0:RegistrationInfo>
   <ns0:Triggers>
     <ns0:TimeTrigger>
-      <ns0:StartBoundary>2024-08-21T11:05:00</ns0:StartBoundary>
-      <ns0:EndBoundary>2025-08-21T11:05:00</ns0:EndBoundary>
+      <ns0:StartBoundary>2024-08-21T11:22:00</ns0:StartBoundary>
+      <ns0:EndBoundary>2025-08-21T11:22:00</ns0:EndBoundary>
       <ns0:Enabled>true</ns0:Enabled>
     </ns0:TimeTrigger>
   </ns0:Triggers>

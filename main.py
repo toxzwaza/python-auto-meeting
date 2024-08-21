@@ -14,11 +14,9 @@ def main(arg1, arg2, arg3):
         formatted_nextyear_date = (date_obj + datetime.timedelta(days=365)).strftime('%Y-%m-%dT%H:%M:%S')
             
         if arg3 == 'startRecord':
-            cmd = '/c start "C:\\Program Files\\robopat\\RoboPatIDE.exe" -e "C:\\Users\\soumu\\Desktop\\RPA\\中原\\WebMeeting自動録画\\WebMeeting自動録画.bwnp" -t startRecord'
-            createXML(formatted_date, formatted_nextyear_date, cmd)
+            createXML(formatted_date, formatted_nextyear_date, 'none')
         elif arg3 == 'finishRecord':
-            cmd = '/c start "C:\\Program Files\\robopat\\RoboPatIDE.exe" -e "C:\\Users\\soumu\\Desktop\\RPA\\中原\\WebMeeting自動録画\\WebMeeting自動録画.bwnp" -t finishRecord'
-            createXML(formatted_date, formatted_nextyear_date, cmd)
+            createXML(formatted_date, formatted_nextyear_date, 'none')
         else:
             reserveURL = arg3
             if 'teams' in reserveURL:
@@ -42,9 +40,29 @@ def createXML(formatted_date, formatted_nextyear_date, cmd):
 
     # 絶対パスでファイルを読み込む
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    template_path = os.path.join(script_dir, 'template.xml')
-    tree = ET.parse(template_path)
+    if cmd != 'none' :
+        template_path = os.path.join(script_dir, 'template.xml')
+    else :
+        template_path = os.path.join(script_dir, 'RecordTemplate.xml')
+
+    # ファイル確認
+    if not os.path.exists(template_path):
+        raise FileNotFoundError(f"テンプレートファイルが見つかりません: {template_path}")
+        return
+
+    try:
+        tree = ET.parse(template_path)
+    except ET.ParseError as e:
+        print(e)
+        return
+
     root = tree.getroot()
+    
+    print(formatted_date)
+    print(formatted_nextyear_date)
+    print(cmd)
+    print(template_path)
+
 
     # 名前空間を定義
     namespaces = {'ns': 'http://schemas.microsoft.com/windows/2004/02/mit/task'}
@@ -57,16 +75,16 @@ def createXML(formatted_date, formatted_nextyear_date, cmd):
     end_boundary = root.find('.//ns:EndBoundary', namespaces)
     end_boundary.text = formatted_nextyear_date
 
-    # Argumentsタグを編集
-    arguments = root.find('.//ns:Arguments', namespaces)
-    arguments.text = cmd
+    if cmd != 'none' :
+        # Argumentsタグを編集
+        arguments = root.find('.//ns:Arguments', namespaces)
+        arguments.text = cmd
     
-    if 'startRecord' in cmd:
-        tree.write('startRecord.xml', encoding='UTF-16')
-    elif 'finishRecord' in cmd:
-        tree.write('finishRecord.xml', encoding='UTF-16')
-    else:
-        tree.write('reserve.xml', encoding='UTF-16')
+    if cmd == 'none':
+        tree.write('reserveRecord.xml', encoding='UTF-8')  
+    else :
+        tree.write('reserve.xml', encoding='UTF-8')
+        
 
 
 

@@ -1,4 +1,4 @@
-import pyautogui
+import keyboard
 import time
 
 try:
@@ -8,7 +8,7 @@ try:
     time.sleep(5)
 
     # Windows + Alt + R を押す
-    pyautogui.hotkey('win', 'alt', 'r')
+    keyboard.press_and_release('windows+alt+r')
     
     print('キー操作を実行しました。')
     

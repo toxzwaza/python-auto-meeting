@@ -25,7 +25,8 @@ def main(arg1, arg2, arg3):
 
             elif 'zoom' in reserveURL:
                 print('zoom実行')
-            
+                
+
             createXML(formatted_date,formatted_nextyear_date, reserveURL)
     except Exception as e:
         is_success = False
@@ -41,6 +42,7 @@ def createXML(formatted_date, formatted_nextyear_date, cmd):
     # 絶対パスでファイルを読み込む
     script_dir = os.path.dirname(os.path.abspath(__file__))
     if cmd != 'none' :
+
         template_path = os.path.join(script_dir, 'template.xml')
     else :
         template_path = os.path.join(script_dir, 'RecordTemplate.xml')
@@ -51,10 +53,19 @@ def createXML(formatted_date, formatted_nextyear_date, cmd):
         return
 
     try:
-        tree = ET.parse(template_path)
+        with open(template_path, 'rb') as file:
+            content = file.read()
+            if content.startswith(b'\xff\xfe'):
+                content = content.decode('utf-16')
+            else:
+                content = content.decode('utf-8-sig')
+            tree = ET.ElementTree(ET.fromstring(content))  # UTF-8 BOMを考慮してデコード
+
     except ET.ParseError as e:
         print(e)
         return
+
+
 
     root = tree.getroot()
     

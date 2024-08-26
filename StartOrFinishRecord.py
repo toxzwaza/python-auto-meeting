@@ -2,13 +2,13 @@ import keyboard
 import time
 
 try:
-    print('録画を実行します。')
+    print('録画開始・終了を実行します。')
     
     # 2秒待機してからキー操作を開始
     time.sleep(5)
 
     # Windows + Alt + R を押す
-    keyboard.press_and_release('windows+alt+r')
+    keyboard.press_and_release('ctrl+shift+F12')
     
     print('キー操作を実行しました。')
     

@@ -42,7 +42,7 @@
   <Actions Context="Author">
     <Exec>
       <Command>C:\Users\Akioka-Shared\AppData\Local\Programs\Python\Python312\python.exe</Command>
-      <Arguments>StartOrFinishRecord.py</Arguments>
+      <Arguments>FinishRecord.py</Arguments>
       <WorkingDirectory>C:\python\python-auto-meeting</WorkingDirectory>
     </Exec>
   </Actions>

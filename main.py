@@ -93,7 +93,7 @@ def createXML(formatted_date, formatted_nextyear_date, cmd):
         arguments.text = cmd
     
     # 絶対パスで保存
-    output_path = os.path.join(script_dir, 'reserveRecord.xml' if cmd == 'none' else 'reserve.xml')
+    output_path = os.path.join(script_dir, 'reserve.xml' if cmd == 'StartRecord' or cmd == 'FinishRecord' else 'reserveRecord.xml')
     tree.write(output_path, encoding='UTF-8')
         
 
